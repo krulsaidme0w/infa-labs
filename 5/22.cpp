@@ -19,10 +19,10 @@ class List {
 
 public:
 	 
-	 List() {
-	 	Size = 0;
+	List() {
+		Size = 0;
 		head = nullptr;
-	 }
+	}
 
 	~List() {
 		clear();

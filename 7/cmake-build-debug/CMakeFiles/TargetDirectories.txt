@@ -1,0 +1,4 @@
+/home/krul/Documents/infa-labs/7/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/krul/Documents/infa-labs/7/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/home/krul/Documents/infa-labs/7/cmake-build-debug/CMakeFiles/helloworld.dir
+/home/krul/Documents/infa-labs/7/cmake-build-debug/CMakeFiles/helloworld_autogen.dir

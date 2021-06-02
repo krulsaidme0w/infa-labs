@@ -14,6 +14,7 @@ bool f(string s){
                 count++;
         }
     } 
+
     if(count >= length - count)
         return 1;
     else
@@ -25,8 +26,10 @@ int main(){
     try {
         ifstream i("input.txt");
         ofstream o("output.txt");
-        
-
+            
+        if(!i.is_open()) throw string("cannot open file");
+        if(!i.is_open()) throw string("cannot open file");
+     
         while(i){
             string s;
             i >> s;
@@ -34,12 +37,18 @@ int main(){
                 o << s << ' ';
             }
         }
+    
         
-        
+
         o.close();
         i.close();
+        
+
     }
-    catch(const char* exception) {
-        cout << "bad";
+    catch(int a) {
+        cout << "int exception with value a";
+    }
+    catch(string s) {
+        cout << s;
     }
 }

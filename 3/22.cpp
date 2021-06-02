@@ -179,7 +179,6 @@ int main() {
 	info t = getCapital(array, n, s);
 	printInfo(t);
 
-	
 
 	return 0;
 

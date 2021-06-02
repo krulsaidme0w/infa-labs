@@ -149,24 +149,32 @@ void makeRightArray(vector<DList> rlst, vector<DList> flst) {
 	for(int i = 0; i < rlst.size(); ++i) {
 	
 		Node* rtemp = rlst[i].Head;
-		Node* ftemp = flst[i].Head;
+		string rs = "";
 
-    	while(rtemp != nullptr) {
+		while(rtemp != nullptr) {
+			rs += rtemp[i]->data;
+			rtemp = rtemp->pNext;
+		}
+
+		
+		
+
+
+
+
+    	// while(rtemp != nullptr) {
     		
-    		if(rtemp->data != ftemp->data) {
-    			ftemp->data = rtemp->data;
-    		}
+    	// 	if(rtemp->data != ftemp->data) {
+    	// 		ftemp->data = rtemp->data;
+    	// 	}
 
-    		rtemp = rtemp->pNext;
-    		ftemp = ftemp->pNext;
-    	}
+    	// 	rtemp = rtemp->pNext;
+    	// 	ftemp = ftemp->pNext;
+    	// }
 
     }
 
 }
-
-
-
 
 
 int main() {

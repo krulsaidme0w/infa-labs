@@ -14,16 +14,17 @@ class RF : public QWidget {
 
 public:
 
-    int x, speed, keyflag;
+    int x, speed, key_flag;
 
-    explicit RF (QWidget *parent = nullptr) : QWidget(parent), x(100), speed(2), keyflag(0) {
+    explicit RF (QWidget *parent = nullptr) : QWidget(parent), x(100), speed(2), key_flag(0) {
 
     auto show_btn = new QPushButton("Show flag", this);
     auto hide_btn = new QPushButton("Hide flag", this);
     auto name_btn = new QPushButton("Author", this);
     auto change_btn = new QPushButton("Change direction", this);
 
-    auto lbl = new QLabel(author, this);
+    lbl = new QLabel(author, this);
+    lbl->setFont(QFont("Purisa",24));
     lbl->setStyleSheet("QLabel {color: #000000;}");
     lbl->setVisible(author_visible);
 
@@ -43,16 +44,16 @@ protected:
 
     void mouseReleaseEvent(QMouseEvent *event) override {
         if(event->button() ==  Qt::LeftButton) {
-            keyflag = 1;
+            key_flag = 1;
         }
         else if(event->button() == Qt::RightButton) {
-            keyflag = 0;
+            key_flag = 0;
         }
     }
 
     void paintEvent(QPaintEvent *e) override {
 
-        if(keyflag == 1) {
+        if(key_flag == 1) {
             x += speed;
         }
 
@@ -76,10 +77,13 @@ private slots:
     }
     void hide_flag(){
         flag = false;
-        keyflag = 0;
+        key_flag = 0;
         update();
     }
     void show_author(){
+        if(key_flag || flag) {
+            return;
+        }
         author_visible = !author_visible;
         lbl->setVisible(author_visible);
     }
@@ -98,7 +102,6 @@ int main(int argc, char *argv[]) {
     QApplication app(argc, argv);
 
     RF window;
-
     window.resize(600, 300);
     window.setWindowTitle("7, 8");
     window.show();

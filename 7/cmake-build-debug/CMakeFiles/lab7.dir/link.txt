@@ -1,0 +1,1 @@
+/usr/bin/c++ -g -rdynamic CMakeFiles/lab7.dir/main.cpp.o -o lab7  /usr/lib/x86_64-linux-gnu/libQt5Widgets.so.5.14.2 /usr/lib/x86_64-linux-gnu/libQt5Gui.so.5.14.2 /usr/lib/x86_64-linux-gnu/libQt5Core.so.5.14.2 

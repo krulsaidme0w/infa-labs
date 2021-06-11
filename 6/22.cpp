@@ -18,6 +18,14 @@ class Node {
 		this->pPrev = pPrev;
 	}
 
+    bool operator==(const Node &l) {
+        if(this->data != l.data) {
+            return 0;
+        }
+
+        return 1;
+    }
+
 };
 
 class DList {
@@ -27,9 +35,12 @@ public:
 	Node* Head;
     Node* Tail; 
 
+    int size;
+
     DList() {
      	Head = nullptr;
      	Tail = nullptr;
+        size = 0;
     };    
      
     // ~DList() {
@@ -40,7 +51,11 @@ public:
     //  		Head = Tail;
     //  	}
     // }                
-     
+    
+    int GetSize() {
+        return size;
+    }
+
     void Add(char data) {
 
     	Node* temp = new Node(data, nullptr, nullptr);
@@ -54,6 +69,8 @@ public:
     		temp->pPrev = Tail;
     		Tail = temp;
     	}
+
+        size++;
 
     	return;
     }
@@ -92,6 +109,27 @@ public:
     	}
 
     	return s;
+    }
+
+    bool operator==(DList &l) {
+        
+        if(this->GetSize() != l.GetSize()) {
+            return 0;
+        }
+
+        Node* node1 = this->Head;
+        Node* node2 = l.Head;
+
+        while(node1 != nullptr) {
+            if(node1 != node2) {
+                return 0;
+            }
+            node1 = node1->pNext;
+            node2 = node2->pNext;
+        }
+
+        return 1;
+
     }
  
 };
@@ -144,38 +182,119 @@ vector<DList> readFile(string fileName) {
 }
 
 
+DList findWord(DList rightWrd, vector<DList> flst) {
+
+
+    
+    int kmax = -1;
+    DList wrd;
+
+    for(auto falseWrd : flst) {
+
+        Node* rtemp = rightWrd.Head;
+        Node* ftemp = falseWrd.Head;
+        int k = 0;
+
+        if(falseWrd.GetSize() == rightWrd.GetSize()) { 
+            while(rtemp != nullptr) {
+            
+                if(rtemp->data == ftemp->data) {
+                    k++;
+                }
+
+                rtemp = rtemp->pNext;
+                ftemp = ftemp->pNext;
+            }
+        }
+
+        else {
+
+            if(falseWrd.GetSize() > rightWrd.GetSize()) {
+                while(rtemp != nullptr) {
+            
+                    if(rtemp->data == ftemp->data) {
+                        k++;
+                    }
+
+                    rtemp = rtemp->pNext;
+                    ftemp = ftemp->pNext;
+                }
+
+            }
+            else {
+                while(ftemp != nullptr) {
+            
+                    if(rtemp->data == ftemp->data) {
+                        k++;
+                    }
+
+                    rtemp = rtemp->pNext;
+                    ftemp = ftemp->pNext;
+                }
+            }
+        }
+
+        if(k > kmax) {
+            kmax = k;
+            wrd = falseWrd;
+        }
+    }
+
+    return wrd;
+
+}
+
+
 void makeRightArray(vector<DList> rlst, vector<DList> flst) {
 
-	for(int i = 0; i < rlst.size(); ++i) {
-	
-		Node* rtemp = rlst[i].Head;
-		string rs = "";
-
-		while(rtemp != nullptr) {
-			rs += rtemp[i]->data;
-			rtemp = rtemp->pNext;
-		}
-
-		
-		
+	for(auto rightWrd : rlst) {
 
 
+        DList word = findWord(rightWrd, flst);
+        //word.ShowFromHead();
+        
 
 
-    	// while(rtemp != nullptr) {
-    		
-    	// 	if(rtemp->data != ftemp->data) {
-    	// 		ftemp->data = rtemp->data;
-    	// 	}
+        for(auto falseWrd : flst) {
 
-    	// 	rtemp = rtemp->pNext;
-    	// 	ftemp = ftemp->pNext;
-    	// }
+            if(falseWrd == word) {
+                Node* rtemp = rightWrd.Head;
+                Node* ftemp = falseWrd.Head;
+
+                while(rtemp != nullptr) {
+                    
+                    if(ftemp == nullptr) {
+                        falseWrd.Add(rtemp->data);
+                    }
+
+                    else if(rtemp->data != ftemp->data) {
+                        ftemp->data = rtemp->data;
+                    }
+
+                    rtemp = rtemp->pNext;
+                    
+                    if(ftemp != nullptr)
+                        ftemp = ftemp->pNext;
+                }
+                break;
+            }
+        }
+
+        // for(auto falseWrd : flst) {
+        //     falseWrd.ShowFromHead();
+        // }
+        // cout << endl;
 
     }
 
 }
 
+/*
+spske
+coo
+meew
+nyyu
+*/
 
 int main() {
 
@@ -187,7 +306,7 @@ int main() {
 
 	makeRightArray(rlst, flst);
 
-	writeFile("false.txt", rlst);
+	writeFile("false.txt", flst);
 
 	cout << "right" << endl << endl;
 	readFile("right.txt");
